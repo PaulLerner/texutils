@@ -15,6 +15,7 @@ def main(tex_file, split=None, do_macro=False):
         macros = re.findall(r"\\newcommand{(.+)}{(.+)}", tex)
         # print(macros)
         # TODO replace macros
+        raise NotImplementedError("need to fix escape characters because of '\\'")
         for macro, value in macros:
             print(macro, value)
             macro = r"\%s{}" % macro
