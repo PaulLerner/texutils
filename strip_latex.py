@@ -1,10 +1,16 @@
-"""Usage: strip_latex.py <tex_file> [--split=<keyword>]"""
+"""Usage: striptex <tex_file> [--split=<keyword>]"""
 from docopt import docopt
 import re
 from pathlib import Path
 
 
-def main(tex_file, split=None, do_macro=False):
+def main():
+    # parse arguments
+    args = docopt(__doc__)
+    tex_file = Path(args['<tex_file>'])
+    split=args['--split']
+    do_macro=False
+    
     with open(tex_file, 'rt') as file:
         tex = file.read()
     # strip comments
@@ -40,5 +46,4 @@ def main(tex_file, split=None, do_macro=False):
 
 
 if __name__ == '__main__':
-    args = docopt(__doc__)
-    main(Path(args['<tex_file>']), split=args['--split'])
+    main()
