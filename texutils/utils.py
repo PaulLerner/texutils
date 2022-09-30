@@ -22,7 +22,7 @@ def parse_bib(bib):
     return papers
 
 
-def get_authors(bib_entry):
+def get_authors(bib_entry, last_name_only=False):
     """
     Parameters
     ----------
@@ -36,4 +36,6 @@ def get_authors(bib_entry):
     """
     text = re.findall(r"author ?= ?{([\w, -\.]*)}", bib_entry)[0]
     names = re.split(r" and ", text)
+    if last_name_only:
+        names = [re.findall(r"\w+", name)[0] for name in names]
     return names
