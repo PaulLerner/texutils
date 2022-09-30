@@ -8,13 +8,8 @@ with open('README.md') as f:
     long_description = f.read()
 
 setup(
-    name='strip_latex',
+    name='texutils',
     packages=find_packages(),
-    entry_points = {
-        'console_scripts': [
-            'striptex=strip_latex:main',
-        ],
-    },
     install_requires=[
         str(r)
         for r in pkg_resources.parse_requirements(
