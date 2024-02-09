@@ -13,12 +13,12 @@ def parse_bib(bib):
     papers: dict[str, str]
         {key of the paper: corresponding BibTeX entry}
     """
-    bib = re.sub('\s+', ' ', bib)
+    #bib = re.sub('\s+', ' ', bib)
     papers = {}
     for paper in bib.split('@'):
-        key = re.findall(r"\w*{(\w*),.*}", paper)
-        if key:
-            papers[key[0]] = paper
+        key = re.match(r".+\{(.+),", paper)
+        if key is not None:
+            papers[key[1]] = paper
     return papers
 
 
