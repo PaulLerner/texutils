@@ -1,18 +1,27 @@
-"""Usage: striptex <tex_file> [--split=<keyword>]"""
-from docopt import docopt
 import re
 from pathlib import Path
+from jsonargparse import CLI
 
 
-def main():
-    # parse arguments
-    args = docopt(__doc__)
-    tex_file = Path(args['<tex_file>'])
-    split=args['--split']
+def multi_line_input(message=""):
+    print(message, end="")
+    lines = []
+    while True:
+        try:
+            lines.append(input())
+        except EOFError:
+            break
+    return '\n'.join(lines)
+
+
+def main(tex_file: Path = None, split: str = r"\section{"):
     do_macro=False
-    
-    with open(tex_file, 'rt') as file:
-        tex = file.read()
+
+    if tex_file is not None:
+        with open(tex_file, 'rt') as file:
+            tex = file.read()
+    else:
+        tex = multi_line_input("Paste your tex here then press Ctrl+D\n>>> ")
     # strip comments
     tex = re.sub(r"([^\\])%.*", r"\g<1>", tex)
 
@@ -41,9 +50,12 @@ def main():
         tex = split+f"\n\n\n{split}".join(tex.split(split))
 
     # save output
-    with open(tex_file.with_suffix('.txt'), 'wt') as file:
-        file.write(tex)
+    if tex_file is not None:
+        with open(tex_file.with_suffix('.txt'), 'wt') as file:
+            file.write(tex)
+    else:
+        print("\n\n", tex)
 
 
 if __name__ == '__main__':
-    main()
+    CLI(main)
