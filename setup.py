@@ -21,7 +21,6 @@ setup(
     long_description_content_type='text/markdown',
 
     author='Paul Lerner',
-    author_email='paul.lerner@lisn.upsaclay.fr',
     url='https://github.com/PaulLerner/texutils',
 
     classifiers=[
