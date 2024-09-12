@@ -22,7 +22,7 @@ setup(
 
     author='Paul Lerner',
     author_email='paul.lerner@lisn.upsaclay.fr',
-    url='https://github.com/PaulLerner/strip_latex',
+    url='https://github.com/PaulLerner/texutils',
 
     classifiers=[
         "Development Status :: 4 - Beta",
