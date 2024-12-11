@@ -1,27 +1,17 @@
 import re
 from pathlib import Path
 from jsonargparse import CLI
+import pyperclip
 
 
-def multi_line_input(message=""):
-    print(message, end="")
-    lines = []
-    while True:
-        try:
-            lines.append(input())
-        except EOFError:
-            break
-    return '\n'.join(lines)
-
-
-def main(tex_file: Path = None, split: str = r"\section{"):
+def main(tex_file: Path = None, split: str = r"\section"):
     do_macro=False
 
     if tex_file is not None:
         with open(tex_file, 'rt') as file:
             tex = file.read()
     else:
-        tex = multi_line_input("Paste your tex here then press Ctrl+D\n>>> ")
+        tex = pyperclip.paste()
     # strip comments
     tex = re.sub(r"([^\\])%.*", r"\g<1>", tex)
 
@@ -55,6 +45,8 @@ def main(tex_file: Path = None, split: str = r"\section{"):
             file.write(tex)
     else:
         print("\n\n", tex)
+        pyperclip.copy(tex)
+        print("\n**Copied to clipboard**")
 
 
 if __name__ == '__main__':
