@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
+
 def parse_bib(bib):
     """
     Parameters
@@ -20,6 +21,15 @@ def parse_bib(bib):
         if key is not None:
             papers[key[1]] = paper
     return papers
+
+
+def clean_bib(bib):
+  # preproc: remove escaped tex commands
+  bib = re.sub(r"{\\\w+}|\\{|\\}", "", bib)
+  # remove keywords and note fields
+  # matches all characters until closing curly bracket "}", optionally followed by a comma ","
+  bib = re.sub(r"\b(keywords|(an)?note) ?= ?{[^}]+},?", "", bib)
+  return bib
 
 
 def get_authors(bib_entry, last_name_only=False):
