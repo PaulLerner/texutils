@@ -20,7 +20,9 @@ def main(error_log: Path, bib_path: Path):
     """Search missing references (from error log) in (another) bib file"""
     with open(error_log, 'rt') as file:
         log = file.read()
-    keys = re.findall(r'find a database entry for "(.+)"', log)
+#    keys = re.findall(r'find a database entry for "(.+)"', log)
+    keys = re.findall(r"Package natbib Warning: Citation `(.+)' on page", log)
+    assert keys, f"Didn't find any match"
     with open(bib_path, 'rt') as file:
         bib = file.read()
     find(keys, bib)
